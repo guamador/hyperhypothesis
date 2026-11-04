@@ -1,0 +1,45 @@
+{
+ "numero": 2,
+ "titulo": "E se a Terra parasse de girar por 1 segundo?",
+ "highlight": [
+  "segundo",
+  "só?",
+  "gira.",
+  "junto.",
+  "chão",
+  "não.",
+  "baixo.",
+  "lado.",
+  "leste...",
+  "1.670",
+  "equador.",
+  "dobro",
+  "avião.",
+  "meio",
+  "quilômetro.",
+  "supersônico",
+  "oceanos",
+  "costas.",
+  "topo,",
+  "pior:",
+  "girar.",
+  "tranco",
+  "polos,",
+  "Paulo,",
+  "1.530",
+  "segundo?"
+ ],
+ "nocap": [
+  0,
+  6,
+  13,
+  16
+ ],
+ "voz": {
+  "nome": "Will - Deep, Smooth and Affectionate",
+  "voice_id": "CstacWqMhJQlnfLPxRG4",
+  "modelo": "eleven_v4",
+  "flow": "4RAIBGvevuCczqTEZjTW"
+ },
+ "publicado": "2026-11-06T18:00:00-03:00"
+}

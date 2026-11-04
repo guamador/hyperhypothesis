@@ -15,7 +15,7 @@ Mas ele gira. E você gira junto.
 [pause] Agora, o chão para. Você não.
 A gravidade te puxa pra baixo. Não pro lado.
 Então você continua indo para o leste...
-[dramatic] a 1.670 quilômetros por hora. No equador.
+[dramatically] a 1.670 quilômetros por hora. No equador.
 Quase o dobro da velocidade de um avião.
 Em um segundo, você anda quase meio quilômetro. Até bater em alguma coisa.
 O ar vai junto: um vento supersônico em dois terços do planeta.

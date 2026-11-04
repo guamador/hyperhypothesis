@@ -1,0 +1,279 @@
+{
+ "lead_in": 0,
+ "segments": [
+  {
+   "t": "E se a Terra parasse de girar... por um segundo só?",
+   "d": 3.2,
+   "start": 0.0,
+   "end": 3.583,
+   "chunks": [
+    [
+     0.0,
+     0.845
+    ],
+    [
+     1.044,
+     2.118
+    ],
+    [
+     2.53,
+     3.583
+    ]
+   ]
+  },
+  {
+   "t": "Parece pouco. Você nem sente o planeta girar.",
+   "d": 2.8,
+   "start": 4.112,
+   "end": 6.813,
+   "chunks": [
+    [
+     4.112,
+     4.879
+    ],
+    [
+     5.221,
+     6.813
+    ]
+   ]
+  },
+  {
+   "t": "Mas ele gira. E você gira junto.",
+   "d": 2.0,
+   "start": 7.261,
+   "end": 10.112,
+   "chunks": [
+    [
+     7.261,
+     8.063
+    ],
+    [
+     8.445,
+     10.112
+    ]
+   ]
+  },
+  {
+   "t": "Agora, o chão para. Você não.",
+   "d": 1.8,
+   "start": 10.712,
+   "end": 13.141,
+   "chunks": [
+    [
+     10.712,
+     11.162
+    ],
+    [
+     11.372,
+     12.132
+    ],
+    [
+     12.563,
+     13.141
+    ]
+   ]
+  },
+  {
+   "t": "A gravidade te puxa pra baixo. Não pro lado.",
+   "d": 2.8,
+   "start": 13.504,
+   "end": 16.365,
+   "chunks": [
+    [
+     13.504,
+     14.362
+    ],
+    [
+     14.551,
+     15.362
+    ],
+    [
+     15.673,
+     16.365
+    ]
+   ]
+  },
+  {
+   "t": "Então você continua indo para o leste...",
+   "d": 2.5,
+   "start": 16.71,
+   "end": 18.913,
+   "chunks": [
+    [
+     16.71,
+     18.913
+    ]
+   ]
+  },
+  {
+   "t": "a 1.670 quilômetros por hora. No equador.",
+   "d": 2.6,
+   "start": 19.145,
+   "end": 22.27,
+   "chunks": [
+    [
+     19.145,
+     22.27
+    ]
+   ]
+  },
+  {
+   "t": "Quase o dobro da velocidade de um avião.",
+   "d": 2.5,
+   "start": 22.522,
+   "end": 25.812,
+   "chunks": [
+    [
+     22.522,
+     23.291
+    ],
+    [
+     23.595,
+     25.812
+    ]
+   ]
+  },
+  {
+   "t": "Em um segundo, você anda quase meio quilômetro. Até bater em alguma coisa.",
+   "d": 4.6,
+   "start": 26.134,
+   "end": 30.795,
+   "chunks": [
+    [
+     26.134,
+     28.985
+    ],
+    [
+     29.292,
+     30.795
+    ]
+   ]
+  },
+  {
+   "t": "O ar vai junto: um vento supersônico em dois terços do planeta.",
+   "d": 3.9,
+   "start": 31.171,
+   "end": 35.35,
+   "chunks": [
+    [
+     31.171,
+     32.006
+    ],
+    [
+     32.28,
+     35.35
+    ]
+   ]
+  },
+  {
+   "t": "Os oceanos avançam sobre as costas.",
+   "d": 2.2,
+   "start": 35.626,
+   "end": 37.806,
+   "chunks": [
+    [
+     35.626,
+     37.806
+    ]
+   ]
+  },
+  {
+   "t": "Prédios? A base para. O topo, não.",
+   "d": 2.1,
+   "start": 38.122,
+   "end": 40.913,
+   "chunks": [
+    [
+     38.122,
+     38.646
+    ],
+    [
+     38.916,
+     39.689
+    ],
+    [
+     39.953,
+     40.913
+    ]
+   ]
+  },
+  {
+   "t": "E o pior: um segundo depois, a Terra volta a girar.",
+   "d": 3.2,
+   "start": 41.329,
+   "end": 44.975,
+   "chunks": [
+    [
+     41.329,
+     41.889
+    ],
+    [
+     42.228,
+     43.352
+    ],
+    [
+     43.563,
+     44.975
+    ]
+   ]
+  },
+  {
+   "t": "Tudo o que parou leva o tranco de novo.",
+   "d": 2.4,
+   "start": 45.31,
+   "end": 47.532,
+   "chunks": [
+    [
+     45.31,
+     46.575
+    ],
+    [
+     46.765,
+     47.532
+    ]
+   ]
+  },
+  {
+   "t": "Nos polos, quase nada acontece.",
+   "d": 1.9,
+   "start": 47.904,
+   "end": 49.929,
+   "chunks": [
+    [
+     47.904,
+     49.929
+    ]
+   ]
+  },
+  {
+   "t": "Em São Paulo, você seria lançado a 1.530 quilômetros por hora.",
+   "d": 3.9,
+   "start": 50.234,
+   "end": 54.616,
+   "chunks": [
+    [
+     50.234,
+     50.886
+    ],
+    [
+     51.091,
+     54.616
+    ]
+   ]
+  },
+  {
+   "t": "Onde você queria estar nesse segundo?",
+   "d": 2.3,
+   "start": 55.018,
+   "end": 56.761,
+   "chunks": [
+    [
+     55.018,
+     56.761
+    ]
+   ]
+  }
+ ],
+ "tail": 3.0,
+ "audio_dur": 56.999184
+}
