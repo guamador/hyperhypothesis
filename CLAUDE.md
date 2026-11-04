@@ -23,6 +23,7 @@ O dono é o Gustavo. Tudo que vai para ele, inclusive mensagens e legendas, é e
 - `hh/audio.py`: trilha ambiente bem baixa, que abaixa mais com a fala, e efeitos em níveis fixos abaixo da narração (`LEVEL`).
   - gravados (Kenney, CC0): `impact`, `crash`, `boom`, `metal`, `glass`, `rumble`, `thruster`, `glitch`, `force`, `tick`;
   - sintetizados: `whoosh`, `wind`, `riser`, `pop`.
+- `hh/themes.py`: temas sazonais. Com `"tema": "natal"` no `meta.json`, o vídeo ganha sozinho gorro de Papai Noel no personagem, neve caindo, neve nas árvores e telhados, e pisca-pisca. Para testar sem mudar o vídeo, use `HH_THEME=natal`. `themes.tema_da_data(mes, dia)` diz qual tema vale numa data.
 - `brand/CREDITS.md`: licenças de tudo que veio de fora. Só use material livre para uso comercial e registre-o lá.
 - `hh/render.py`: renderiza um vídeo. `python3 -m hh.render videos/<pasta> frames 10 20` gera frames de conferência; `... video` gera `out/video.mp4` (motion blur de 4 subquadros, ~4–5 min por vídeo); `... audio` refaz só o som de um vídeo já renderizado.
 - `hh/align.py`: `python3 -m hh.align videos/<pasta>` alinha as frases do `timing.json` com o `narr.mp3` pelas pausas da fala.
@@ -58,7 +59,10 @@ Se o ElevenLabs estiver bloqueado (000/403), **não gere narração**, porque o 
 ## Rotina semanal (tarefa agendada)
 
 1. Leia o calendário no doc e pegue os próximos 4 vídeos ainda em status "Ideia".
-2. Para cada um: escreva o roteiro seguindo o `BRAND.md`, crie a pasta `videos/NN-slug/` com `meta.json` e `timing.json`, gere a narração (uma versão) e salve como `narr.mp3`.
+2. Para cada um: escreva o roteiro seguindo o `BRAND.md`, crie a pasta `videos/NN-slug/` com `meta.json` e `timing.json`.
+   - **Tema:** se `themes.tema_da_data()` da data de publicação devolver um tema, coloque `"tema"` no `meta.json`.
+   - **Episódios temáticos:** confira também a seção da temporada no doc (ex.: "Temporada de Natal"). Os episódios de lá entram nas datas indicadas, junto com os do calendário principal.
+   - Depois disso, siga no mesmo item: gere a narração (uma versão) e salve como `narr.mp3`.
 3. Rode `python3 -m hh.align` e escreva o `scenes.py`, reaproveitando as peças do `fx` e partindo do vídeo 02 como modelo (ele usa a v3 inteira).
    - **Cada cena precisa de ação**: um personagem ou objeto fazendo algo, com antecipação, impacto e reação (partículas, tremor, som). Títulos entram com `pop_text`, e números contam ou entram com `spring`.
    - **Cada cena precisa de cenário**, nada de forma solta no vazio: ícones, prédios, árvores, globo, partículas. Também precisa de movimento contínuo, um evento visual com som (`CUES`) e tremor nos impactos (`SHAKES`).

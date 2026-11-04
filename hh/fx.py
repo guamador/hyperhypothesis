@@ -156,6 +156,13 @@ def tree(ctx, x, y, s=1.0, col=None, a=1.0, lean=0.0):
     col = col or hx("2E6B5E")
     rrect(ctx, x - 7 * s, y - 70 * s, 14 * s, 70 * s, 5 * s); fill(ctx, MUTED, a)
     circle(ctx, x + lean * 30 * s, y - 100 * s, 46 * s, col, a); circle(ctx, x - 22 * s + lean * 24 * s, y - 78 * s, 30 * s, col, a)
+    if _core.THEME == "natal":                               # neve na copa + pisca-pisca
+        ctx.save(); ctx.new_sub_path(); ctx.arc(x + lean * 30 * s, y - 100 * s, 46 * s, PI * 1.08, PI * 1.92)
+        ctx.arc_negative(x + lean * 30 * s, y - 112 * s, 40 * s, PI * 1.9, PI * 1.1); ctx.close_path(); fill(ctx, INK, a * .95); ctx.restore()
+        for j in range(6):
+            ang = PI * (.15 + j * .14); cx_ = x + lean * 30 * s + 40 * s * math.cos(ang); cy_ = y - 92 * s + 34 * s * math.sin(ang) * .6
+            on = int(_core.NOW * 3 + j) % 2 == 0
+            circle(ctx, cx_, cy_, 5.5 * s, (RED, SOLAR, BLUE)[j % 3], a * (1 if on else .35))
 
 def building(ctx, x, y, w, h, col=ORBIT, win=MUTED, a=1.0, lit=.6, seed=0, skew=0.0):
     """Prédio com janelas (base em x..x+w, chão em y). skew desloca o topo para a direita (px)."""
@@ -168,6 +175,14 @@ def building(ctx, x, y, w, h, col=ORBIT, win=MUTED, a=1.0, lit=.6, seed=0, skew=
         for c in range(cols):
             on = rnd.random() < lit
             rrect(ctx, x + dx + 14 + c * 34, fy + 12, 18, h / floors - 22, 3); fill(ctx, SOLAR if on else win, a * (.85 if on else .35))
+
+    if _core.THEME == "natal":                               # neve no telhado + pisca-pisca na fachada
+        top = y - h; rrect(ctx, x + skew - 6, top - 12, w + 12, 20, 10); fill(ctx, INK, a * .95)
+        n = max(3, int(w // 22))
+        for j in range(n):
+            px = x + skew * .98 + 10 + j * (w - 20) / max(1, n - 1); py = top + 18 + 8 * math.sin(j * 1.3)
+            on = int(_core.NOW * 3 + j) % 2 == 0
+            circle(ctx, px, py, 5, (RED, SOLAR, BLUE, INK)[j % 4], a * (1 if on else .3))
 
 def skyline(ctx, y, seed=1, a=1.0, x0=-20, x1=W + 20, hmin=160, hmax=420, col=ORBIT):
     rnd = random.Random(seed); x = x0

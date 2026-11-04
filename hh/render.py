@@ -20,6 +20,7 @@ VDIR = os.path.abspath(sys.argv[1]); os.environ["HH_VIDEO"] = VDIR
 from hh import core  # noqa: E402
 from hh.core import *  # noqa: E402,F403
 from hh import audio  # noqa: E402
+from hh import themes  # noqa: E402
 
 spec = importlib.util.spec_from_file_location("scenes", os.path.join(VDIR, "scenes.py"))
 SC = importlib.util.module_from_spec(spec); spec.loader.exec_module(SC)
@@ -68,6 +69,7 @@ def frame(ctx, t):
         circle(ctx, xw + 26, 960, 16, BLUE)
     else:
         draw_scene(ctx, idx, t)
+    themes.overlay(ctx, t)
     if idx == len(SCENES) - 1:
         fo = clamp((t - (TOTAL - .6)) / .6)
         if fo > 0: ctx.set_source_rgba(*VOID, fo); ctx.paint()

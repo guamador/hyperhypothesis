@@ -23,6 +23,7 @@ RED, BLUE, SOLAR = hx("FF5A1F"), hx("4DD6FF"), hx("FFC93C")
 # ---------------------------------------------------------------- timing
 T = json.load(open(os.path.join(VIDEO, "timing.json")))
 META = json.load(open(os.path.join(VIDEO, "meta.json")))
+THEME = os.environ.get("HH_THEME") or META.get("tema")   # tema sazonal: None | "natal" (ver hh/themes.py)
 SEG = []
 OFF = 0.5 if "start" in T["segments"][0] else 0.0   # respiro antes da primeira fala
 t = T["lead_in"]; SPEECH = []
@@ -112,7 +113,7 @@ def mark(ctx, ox, oy, k, a=1.0):
     circle(ctx, ox + 100*k, oy + 60*k, 10*k, BLUE, a)
 
 def person(ctx, x, y, s=1.0, body=INK, hair=None, a=1.0, hunch=0.0, arms=(.22, -.22), mood=None, look=0.0, blink=True,
-           legs=True, run=None, rot=0.0, squash=1.0, legspread=.12):
+           legs=True, run=None, rot=0.0, squash=1.0, legspread=.12, hat=True):
     """'Você': cabeça círculo, corpo pílula, braços e pernas em pílula. (x,y) = pés.
     arms = (ângulo braço esquerdo, direito) em rad, 0 = para baixo, +/-2.6 = para cima.
     mood: None | "wow" (olhos grandes, boca O) | "happy" (sorriso) | "scared" (olhos grandes, boca reta).
@@ -139,6 +140,13 @@ def person(ctx, x, y, s=1.0, body=INK, hair=None, a=1.0, hunch=0.0, arms=(.22, -
     circle(ctx, 0, hy, 40, body, a)
     if hair:
         ctx.new_sub_path(); ctx.arc(0, hy, 42, PI*1.05, PI*1.95); ctx.close_path(); fill(ctx, hair, a)
+    if THEME == "natal" and hat:                              # gorro de Papai Noel (balança com o tempo)
+        sw = math.sin(NOW * 3.1 + x * .01) * 6
+        ctx.move_to(-38, hy - 30); ctx.curve_to(-20, hy - 92, 30, hy - 118, 62 + sw, hy - 84 + abs(sw) * .5)
+        ctx.curve_to(38, hy - 82, 20, hy - 60, 38, hy - 30); ctx.close_path(); fill(ctx, RED, a)
+        rrect(ctx, -46, hy - 44, 92, 24, 12); fill(ctx, INK, a)
+        circle(ctx, 62 + sw, hy - 84 + abs(sw) * .5, 13, INK, a)
+        rrect(ctx, -46, hy - 44, 92, 24, 12); ctx.set_line_width(3); ctx.set_source_rgba(*VOID, .25 * a); ctx.stroke()
     big = mood in ("wow", "scared"); ex = look * 6
     closed = blink and ((NOW + x * .0031) % 3.5) < .11
     for sx in (-13, 13):
