@@ -28,7 +28,7 @@ Em São Paulo, você seria lançado a 1.530 quilômetros por hora.
 [curious] Onde você queria estar nesse segundo?
 ```
 
-Tamanho: ~880 caracteres com as tags (abaixo do limite de ~1.100).
+Tamanho: 838 caracteres com as tags (abaixo do limite de ~1.100).
 
 ### Estrutura
 
