@@ -1,6 +1,6 @@
 # HyperHypothesis: fábrica de vídeos
 
-Canal de animações curtas "E se...?" (TikTok @hyperhypothesis, YouTube Shorts e Instagram Reels). Formato 1080×1920 a 30 fps, motion graphics 2D feito por código, narração do ElevenLabs.
+Canal de animações curtas "E se...?" (TikTok @hyperhypothesis, YouTube Shorts @hyperhypothesis e Instagram Reels @hyper.hypothesis). Formato 1080×1920 a 30 fps, motion graphics 2D feito por código, narração do ElevenLabs.
 
 O dono é o Gustavo. Tudo que vai para ele, inclusive mensagens e legendas, é escrito em **português do Brasil**.
 
@@ -65,5 +65,9 @@ Se o ElevenLabs estiver bloqueado (000/403), **não gere narração**, porque o 
    - Rode `python3 -m hh.render videos/<pasta> qa` e **olhe a folha `out/qa_sheet.png`**. Corrija tudo que o relatório apontar: texto menor que 36 px, texto embaixo da legenda (faixa y 1370–1530) e tela vazia. Rode de novo até não sobrar nenhum aviso.
    - Renderize o vídeo e confira alguns frames do MP4 final.
 4. Faça commit e push. O MP4 vai para `videos/NN-slug/out/video.mp4`, publicado com `git add -f` para o Metricool conseguir baixar por `https://raw.githubusercontent.com/guamador/hyperhypothesis/main/...`.
-5. Agende no Metricool como **rascunho** (`draft: true`), na data e hora do calendário: TikTok + YouTube Short (+ Instagram Reel, se estiver conectado).
+5. Agende no Metricool como **rascunho** (`draft: true`), na data e hora do calendário, com 3 posts separados:
+   - TikTok: `isAigc` ligado e capa por `videoCoverMilliseconds` no frame do número-herói;
+   - YouTube Short: `madeForKids` false, `isAiGeneratedContent` true e categoria `SCIENCE_TECHNOLOGY`;
+   - Instagram Reel: `instagramData`: `{type: "REEL", showReelOnFeed: true, isAiGenerated: true}`, com 3 a 5 hashtags.
+   Use como media a URL raw **fixada no SHA do commit**: `.../hyperhypothesis/<sha>/videos/...`. Assim o cache do GitHub nunca entrega uma versão antiga.
 6. Atualize o status no doc para "Agendado" e mande uma mensagem curta ao Gustavo pedindo a aprovação dos rascunhos.
