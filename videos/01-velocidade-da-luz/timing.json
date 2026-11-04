@@ -1,0 +1,311 @@
+{
+ "lead_in": 0,
+ "segments": [
+  {
+   "t": "Hipótese número 1.",
+   "d": 1.6,
+   "start": 0.0,
+   "end": 1.362,
+   "chunks": [
+    [
+     0.0,
+     1.362
+    ]
+   ]
+  },
+  {
+   "t": "E se você pudesse viajar na velocidade da luz?",
+   "d": 3.0,
+   "start": 2.019,
+   "end": 4.798,
+   "chunks": [
+    [
+     2.019,
+     4.798
+    ]
+   ]
+  },
+  {
+   "t": "Primeiro problema: você não pode.",
+   "d": 2.3,
+   "start": 5.691,
+   "end": 7.677,
+   "chunks": [
+    [
+     5.691,
+     6.498
+    ],
+    [
+     6.901,
+     7.677
+    ]
+   ]
+  },
+  {
+   "t": "Quanto mais rápido você vai, mais energia precisa.",
+   "d": 2.9,
+   "start": 8.079,
+   "end": 11.431,
+   "chunks": [
+    [
+     8.079,
+     11.431
+    ]
+   ]
+  },
+  {
+   "t": "E na velocidade da luz... ela vira infinita.",
+   "d": 3.1,
+   "start": 11.744,
+   "end": 14.704,
+   "chunks": [
+    [
+     11.744,
+     13.293
+    ],
+    [
+     13.619,
+     14.704
+    ]
+   ]
+  },
+  {
+   "t": "Então vamos chegar perto. 99%.",
+   "d": 2.7,
+   "start": 15.299,
+   "end": 18.628,
+   "chunks": [
+    [
+     15.299,
+     16.648
+    ],
+    [
+     16.983,
+     18.628
+    ]
+   ]
+  },
+  {
+   "t": "Só pra acelerar o seu corpo, 70 quilos, seriam 9.200 megatons de energia.",
+   "d": 4.7,
+   "start": 19.065,
+   "end": 25.435,
+   "chunks": [
+    [
+     19.065,
+     25.435
+    ]
+   ]
+  },
+  {
+   "t": "Mais de meio milhão de bombas de Hiroshima.",
+   "d": 2.9,
+   "start": 25.691,
+   "end": 28.389,
+   "chunks": [
+    [
+     25.691,
+     28.389
+    ]
+   ]
+  },
+  {
+   "t": "E aí... a coisa fica estranha.",
+   "d": 2.6,
+   "start": 28.886,
+   "end": 31.25,
+   "chunks": [
+    [
+     28.886,
+     29.607
+    ],
+    [
+     29.966,
+     31.25
+    ]
+   ]
+  },
+  {
+   "t": "As estrelas não passam por você.",
+   "d": 2.1,
+   "start": 31.764,
+   "end": 33.535,
+   "chunks": [
+    [
+     31.764,
+     33.535
+    ]
+   ]
+  },
+  {
+   "t": "Elas se juntam na sua frente, num anel de luz azul.",
+   "d": 3.1,
+   "start": 33.9,
+   "end": 36.946,
+   "chunks": [
+    [
+     33.9,
+     36.946
+    ]
+   ]
+  },
+  {
+   "t": "Atrás de você... escuridão.",
+   "d": 2.5,
+   "start": 37.35,
+   "end": 39.437,
+   "chunks": [
+    [
+     37.35,
+     38.345
+    ],
+    [
+     38.801,
+     39.437
+    ]
+   ]
+  },
+  {
+   "t": "E o espaço não é vazio.",
+   "d": 1.7,
+   "start": 39.992,
+   "end": 41.776,
+   "chunks": [
+    [
+     39.992,
+     41.776
+    ]
+   ]
+  },
+  {
+   "t": "Cada átomo de hidrogênio no caminho vira um tiro de radiação.",
+   "d": 3.5,
+   "start": 42.15,
+   "end": 46.982,
+   "chunks": [
+    [
+     42.15,
+     45.794
+    ],
+    [
+     46.12,
+     46.982
+    ]
+   ]
+  },
+  {
+   "t": "Sem blindagem, você não sobrevive.",
+   "d": 2.3,
+   "start": 47.256,
+   "end": 50.571,
+   "chunks": [
+    [
+     47.256,
+     48.397
+    ],
+    [
+     48.843,
+     50.571
+    ]
+   ]
+  },
+  {
+   "t": "Mas, se sobrevivesse... a 99,99% da luz,",
+   "d": 3.4,
+   "start": 51.006,
+   "end": 54.39,
+   "chunks": [
+    [
+     51.006,
+     54.39
+    ]
+   ]
+  },
+  {
+   "t": "a estrela mais próxima fica a 22 dias de viagem.",
+   "d": 2.9,
+   "start": 54.606,
+   "end": 58.162,
+   "chunks": [
+    [
+     54.606,
+     58.162
+    ]
+   ]
+  },
+  {
+   "t": "Pelo seu relógio.",
+   "d": 1.5,
+   "start": 58.467,
+   "end": 59.217,
+   "chunks": [
+    [
+     58.467,
+     59.217
+    ]
+   ]
+  },
+  {
+   "t": "Você volta pra casa.",
+   "d": 1.5,
+   "start": 59.689,
+   "end": 61.676,
+   "chunks": [
+    [
+     59.689,
+     60.812
+    ],
+    [
+     61.155,
+     61.676
+    ]
+   ]
+  },
+  {
+   "t": "Pra você, passou um mês e meio.",
+   "d": 2.1,
+   "start": 61.872,
+   "end": 63.997,
+   "chunks": [
+    [
+     61.872,
+     63.057
+    ],
+    [
+     63.42,
+     63.997
+    ]
+   ]
+  },
+  {
+   "t": "Na Terra... passaram 8 anos e meio.",
+   "d": 2.9,
+   "start": 64.281,
+   "end": 66.95,
+   "chunks": [
+    [
+     64.281,
+     66.096
+    ],
+    [
+     66.809,
+     66.95
+    ]
+   ]
+  },
+  {
+   "t": "Valeria a pena?",
+   "d": 2.0,
+   "start": 67.627,
+   "end": 68.465,
+   "chunks": [
+    [
+     67.627,
+     68.465
+    ]
+   ]
+  }
+ ],
+ "tail": 3.0,
+ "audio_dur": 68.75425
+}
