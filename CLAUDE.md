@@ -14,8 +14,17 @@ O dono é o Gustavo. Tudo que vai para ele, inclusive mensagens e legendas, é e
   - cenário: `building`, `skyline`, `tree`, `cloud`, `wave`;
   - efeitos: `arrow`, `trails`, `burst`, `debris`, `glitch_text`;
   - `counter()`: números no formato brasileiro.
-- `hh/audio.py`: trilha ambiente com ducking automático e efeitos sintetizados (`whoosh`, `impact`, `boom`, `rumble`, `riser`, `tick`, `pop`, `wind`, `glitch`).
-- `hh/render.py`: renderiza um vídeo. `python3 -m hh.render videos/<pasta> frames 10 20` gera frames de conferência; `... video` gera `out/video.mp4`.
+- `hh/anim.py`: animação da v3. **Use nas cenas com `from hh.anim import *`**, que já traz `fx` e `core`.
+  - `spring()`: mola com leve overshoot, para tudo que entra na tela;
+  - `wobble()`: movimento secundário (balanço, flutuação, olhar);
+  - partículas: `smoke`, `sparks`, `dust`, `trail_dust`, `spray`, `shockwave`, `speedlines`;
+  - `pop_text` / `pop_text_fit`: título que entra letra a letra.
+- Personagem `person(...)`: tem pernas, `run=t*3` (ciclo de corrida), `rot` (tombo), `squash` (achatar/esticar), `arms`, `mood` e `look`. Ele nunca fica parado: use sempre `wobble` nos braços e no olhar.
+- `hh/audio.py`: trilha ambiente bem baixa, que abaixa mais com a fala, e efeitos em níveis fixos abaixo da narração (`LEVEL`).
+  - gravados (Kenney, CC0): `impact`, `crash`, `boom`, `metal`, `glass`, `rumble`, `thruster`, `glitch`, `force`, `tick`;
+  - sintetizados: `whoosh`, `wind`, `riser`, `pop`.
+- `brand/CREDITS.md`: licenças de tudo que veio de fora. Só use material livre para uso comercial e registre-o lá.
+- `hh/render.py`: renderiza um vídeo. `python3 -m hh.render videos/<pasta> frames 10 20` gera frames de conferência; `... video` gera `out/video.mp4` (motion blur de 4 subquadros, ~4–5 min por vídeo); `... audio` refaz só o som de um vídeo já renderizado.
 - `hh/align.py`: `python3 -m hh.align videos/<pasta>` alinha as frases do `timing.json` com o `narr.mp3` pelas pausas da fala.
 - `videos/NN-slug/`: um vídeo por pasta, com estes arquivos:
   - `meta.json`: número, título, palavras destacadas na legenda e segmentos sem legenda;
@@ -36,6 +45,7 @@ Se o ElevenLabs estiver bloqueado (000/403), **não gere narração**, porque o 
 
 ## Regras fixas
 
+- **Som:** trilha e efeitos sempre abaixo da narração. Não aumente `music_gain` nem os níveis de `LEVEL`; o Gustavo achou alto na v2. Para mudar volume, use o ganho do `CUE` (0,3–1,0).
 - **Texto mínimo de 36 px** na tela, fora o HUD e a legenda. O `qa` acusa o que estiver abaixo disso.
 - Cores: só os tokens da marca (`brand/tokens.json`), mais o verde das árvores e campos (`#2E6B5E`) e o oceano e os continentes do globo (`fx.OCEAN_COL`, `fx.LAND_COL`).
 
@@ -49,7 +59,8 @@ Se o ElevenLabs estiver bloqueado (000/403), **não gere narração**, porque o 
 
 1. Leia o calendário no doc e pegue os próximos 4 vídeos ainda em status "Ideia".
 2. Para cada um: escreva o roteiro seguindo o `BRAND.md`, crie a pasta `videos/NN-slug/` com `meta.json` e `timing.json`, gere a narração (uma versão) e salve como `narr.mp3`.
-3. Rode `python3 -m hh.align` e escreva o `scenes.py`, reaproveitando as peças do `fx` e partindo do vídeo 02 como modelo.
+3. Rode `python3 -m hh.align` e escreva o `scenes.py`, reaproveitando as peças do `fx` e partindo do vídeo 02 como modelo (ele usa a v3 inteira).
+   - **Cada cena precisa de ação**: um personagem ou objeto fazendo algo, com antecipação, impacto e reação (partículas, tremor, som). Títulos entram com `pop_text`, e números contam ou entram com `spring`.
    - **Cada cena precisa de cenário**, nada de forma solta no vazio: ícones, prédios, árvores, globo, partículas. Também precisa de movimento contínuo, um evento visual com som (`CUES`) e tremor nos impactos (`SHAKES`).
    - Rode `python3 -m hh.render videos/<pasta> qa` e **olhe a folha `out/qa_sheet.png`**. Corrija tudo que o relatório apontar: texto menor que 36 px, texto embaixo da legenda (faixa y 1370–1530) e tela vazia. Rode de novo até não sobrar nenhum aviso.
    - Renderize o vídeo e confira alguns frames do MP4 final.

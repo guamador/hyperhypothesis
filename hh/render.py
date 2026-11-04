@@ -4,12 +4,14 @@ Uso:
   python3 -m hh.render videos/<pasta> qa                 -> folha de conferência + relatório (texto pequeno,
                                                             texto sob a legenda, tela vazia)
   python3 -m hh.render videos/<pasta> video              -> <pasta>/out/video.mp4 (narração + trilha + efeitos)
+  python3 -m hh.render videos/<pasta> audio              -> refaz só o som do video.mp4 (rápido, para ajustar volumes)
 
 No scenes.py do vídeo:
   SCENES = [(seg_inicial, seg_final, função), ...]        obrigatório
   CUES   = [(lambda: S(6), "impact", 1.0), ...]           efeitos sonoros (hh/audio.py: SFX)
   SHAKES = [(lambda: S(8) + 1.2, 18, .5), ...]            tremor de câmera: (tempo, amplitude px, duração s)
   ZOOM   = 0.035                                          push-in de câmera por cena (opcional; 0 desliga)
+  MOTION_BLUR = 4                                         subquadros por frame no vídeo final (1 desliga)
 Automático: whoosh + transição em cortina (feixe redshift) entre cenas, trilha ambiente com ducking,
 legenda karaokê, aviso de texto menor que MIN_TEXT.
 """
@@ -51,6 +53,7 @@ def draw_scene(ctx, idx, t):
     ctx.restore()
 
 def frame(ctx, t):
+    t = min(max(0.0, t), TOTAL - 1e-3)
     core.NOW = t; core.TEXTS.clear()
     idx = next(i for i in range(len(SCENES)) if bounds(i)[0] <= t < bounds(i)[1])
     st, en = bounds(idx)
@@ -71,9 +74,17 @@ def frame(ctx, t):
     if t < E(LAST): hud(ctx, t)
     captions(ctx, t)
 
-def surface_at(t):
+MBLUR = getattr(SC, "MOTION_BLUR", 4)   # subquadros por frame (1 desliga); obturador de 180°
+SHUTTER = .5
+
+def surface_at(t, mb=1):
     surf = cairo.ImageSurface(cairo.FORMAT_ARGB32, W, H); ctx = cairo.Context(surf)
-    ctx.set_antialias(cairo.ANTIALIAS_BEST); frame(ctx, t); return surf
+    ctx.set_antialias(cairo.ANTIALIAS_BEST)
+    if mb <= 1: frame(ctx, t); return surf
+    for i in range(mb):                                 # média móvel dos subquadros = motion blur
+        ti = t + (i / (mb - 1) - .5) * SHUTTER / FPS
+        ctx.push_group(); frame(ctx, ti); ctx.pop_group_to_source(); ctx.paint_with_alpha(1 / (i + 1))
+    return surf
 
 def lint_report():
     if core.LINT:
@@ -116,6 +127,14 @@ if __name__ == "__main__":
         print("total", round(TOTAL, 2)); lint_report()
     elif mode == "qa":
         qa()
+    elif mode == "audio":                               # só refaz o som e troca no vídeo já renderizado
+        narr = os.path.join(VDIR, "narr.mp3"); outp = os.path.join(OUT, "video.mp4"); tmp = outp + ".tmp.mp4"
+        cues = list(CUES) + [(bounds(i)[0] - .12, "whoosh", .7) for i in range(1, len(SCENES))]
+        wav = os.path.join(OUT, "mix.wav"); audio.mix(narr if os.path.exists(narr) else None, TOTAL, cues, wav, offset=OFF)
+        subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", outp, "-i", wav, "-map", "0:v", "-map", "1:a", "-c:v", "copy",
+                        "-af", "loudnorm=I=-14:TP=-1.5:LRA=11", "-ar", "48000", "-c:a", "aac", "-b:a", "192k", "-shortest",
+                        "-movflags", "+faststart", tmp], check=True)
+        os.replace(tmp, outp); os.remove(wav); print("ok (áudio refeito)", outp)
     else:
         narr = os.path.join(VDIR, "narr.mp3")
         cues = list(CUES) + [(bounds(i)[0] - .12, "whoosh", .7) for i in range(1, len(SCENES))]
@@ -129,7 +148,7 @@ if __name__ == "__main__":
         p = subprocess.Popen(cmd, stdin=subprocess.PIPE)
         n = int(TOTAL * FPS)
         for i in range(n):
-            p.stdin.write(bytes(surface_at(i / FPS).get_data()))
+            p.stdin.write(bytes(surface_at(i / FPS, MBLUR).get_data()))
             if i % 300 == 0: print(f"{i}/{n}", flush=True)
         p.stdin.close(); p.wait(); os.remove(wav)
         print("ok", outp, round(TOTAL, 2)); lint_report()

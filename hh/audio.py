@@ -1,10 +1,18 @@
-"""Som da v2, todo sintetizado (sem créditos e sem direitos autorais).
-- trilha: pad sci-fi em lá menor com pulso suave, que abaixa sozinho quando a narração fala
-- efeitos: whoosh, impact, boom, rumble, riser, tick, pop, wind, glitch
+"""Som do HyperHypothesis.
+- trilha: pad sci-fi em lá menor com pulso suave, bem baixa, que abaixa ainda mais quando a narração fala
+- efeitos gravados: Kenney Impact Sounds + Sci-Fi Sounds (CC0, brand/sfx/), sorteando uma das versões
+    impact, boom, crash, metal, glass, rumble, thruster, glitch, force, tick
+- efeitos sintetizados: whoosh, wind, riser, pop
 mix(narr_path, total, cues, out_wav, offset): cues = [(tempo_s, nome, ganho)]
 """
-import subprocess, wave
+import os, glob, subprocess, wave, functools
 import numpy as np
+
+SFX_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "brand", "sfx")
+KENNEY = {"impact": "impact_punch_heavy", "boom": "low_frequency_explosion", "crash": "explosion_crunch",
+          "metal": "impact_metal_heavy", "glass": "impact_glass_heavy", "rumble": "space_engine_low",
+          "thruster": "thruster_fire", "glitch": "computer_noise", "force": "force_field", "tick": "impact_generic_light"}
+MAXLEN = {"rumble": 2.2, "thruster": 2.5, "glitch": .6}
 
 SR = 48000
 rng = np.random.default_rng(7)
@@ -24,9 +32,9 @@ def _lp(x, k):                           # passa-baixa de um polo (k pode ser ve
     return y
 def _norm(x, g=1.0): m = np.max(np.abs(x)) or 1; return x / m * g
 
-def whoosh(d=.45):
-    n = int(d * SR); k = np.concatenate([np.linspace(.02, .35, n // 2), np.linspace(.35, .02, n - n // 2)])
-    return _norm(_lp(rng.standard_normal(n), k) * np.hanning(n), .8)
+def whoosh(d=.5):
+    n = int(d * SR); k = np.concatenate([np.linspace(.01, .18, n // 2), np.linspace(.18, .01, n - n // 2)])
+    return _norm(_lp(rng.standard_normal(n), k) * np.hanning(n) ** 1.5, .6)
 def wind(d=3.0):
     n = int(d * SR); k = .04 + .03 * np.sin(_t(d) * 2 * np.pi * .7)
     return _norm(_lp(rng.standard_normal(n), k) * _env(n, .6, .8), .6)
@@ -58,6 +66,29 @@ def glitch(d=.5):
     x = np.round(x * 4) / 4 * gate
     return _norm(_lp(x, .5), .5)
 
+@functools.lru_cache(maxsize=None)
+def _kenney_files(prefix): return sorted(glob.glob(os.path.join(SFX_DIR, prefix + "_*.ogg")))
+
+# nível de cada efeito (pico de 100 ms, dBFS) com ganho 1,0 no CUE. A fala fica em ~-20 dB.
+LEVEL = {"impact": -27, "crash": -27, "boom": -27, "metal": -28, "glass": -31,
+         "whoosh": -31, "riser": -30, "pop": -32, "tick": -32,
+         "rumble": -33, "wind": -33, "glitch": -33, "force": -31, "thruster": -32}
+
+def _peak100(x):
+    w = int(.1 * SR); e = np.convolve(x ** 2, np.ones(w) / w, "valid") if len(x) > w else [np.mean(x ** 2)]
+    return 10 * np.log10(np.max(e) + 1e-12)
+
+def _sample(name, seed):
+    """Efeito gravado (Kenney) quando existir; senão o sintetizado. Já sai no nível de LEVEL."""
+    files = _kenney_files(KENNEY[name]) if name in KENNEY else []
+    if files:
+        x = _read(files[seed % len(files)])
+        if name in MAXLEN:
+            x = x[:int(MAXLEN[name] * SR)]; x = x * _env(len(x), .05, .4)
+    else:
+        x = SFX[name]()
+    return x * 10 ** ((LEVEL.get(name, -30) - _peak100(x)) / 20)
+
 SFX = {"whoosh": whoosh, "wind": wind, "impact": impact, "boom": boom, "rumble": rumble,
        "riser": riser, "tick": tick, "pop": pop, "glitch": glitch}
 
@@ -79,7 +110,7 @@ def _read(path):
                          capture_output=True, check=True).stdout
     return np.frombuffer(raw, np.int16).astype(np.float64) / 32768
 
-def mix(narr_path, total, cues, out_wav, offset=0.0, music_gain=.16, duck_to=.07):
+def mix(narr_path, total, cues, out_wav, offset=0.0, music_gain=.055, duck_to=.022, sfx_gain=1.0):
     n = int(total * SR); out = np.zeros(n)
     narr = np.zeros(n)
     if narr_path:
@@ -91,10 +122,10 @@ def mix(narr_path, total, cues, out_wav, offset=0.0, music_gain=.16, duck_to=.07
     for i in range(0, n, 64):                                   # suavização em blocos (rápido)
         acc += (speech[i] - acc) * (1 - (1 - k) ** 64); g[i:i + 64] = acc
     out += music(total) * (music_gain - (music_gain - duck_to) * g)
-    for tt, name, gain in cues:
-        s = SFX[name](); i = int(tt * SR)
+    for j, (tt, name, gain) in enumerate(cues):
+        s = _sample(name, j); i = int(tt * SR)
         if i >= n: continue
-        m = min(len(s), n - i); out[i:i + m] += s[:m] * gain * .5
+        m = min(len(s), n - i); out[i:i + m] += s[:m] * gain * sfx_gain
     out += narr
     peak = np.max(np.abs(out)) or 1
     if peak > .98: out *= .98 / peak

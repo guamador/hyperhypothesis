@@ -111,16 +111,30 @@ def mark(ctx, ox, oy, k, a=1.0):
     rrect(ctx, ox + 22*k, oy + 20*k, 18*k, 80*k, 4*k); rrect(ctx, ox + 60*k, oy + 20*k, 18*k, 80*k, 4*k); fill(ctx, INK, a)
     circle(ctx, ox + 100*k, oy + 60*k, 10*k, BLUE, a)
 
-def person(ctx, x, y, s=1.0, body=INK, hair=None, a=1.0, hunch=0.0, arms=(.22, -.22), mood=None, look=0.0, blink=True):
-    """'Você': cabeça círculo, corpo pílula, braços em pílula. (x,y) = pés.
+def person(ctx, x, y, s=1.0, body=INK, hair=None, a=1.0, hunch=0.0, arms=(.22, -.22), mood=None, look=0.0, blink=True,
+           legs=True, run=None, rot=0.0, squash=1.0, legspread=.12):
+    """'Você': cabeça círculo, corpo pílula, braços e pernas em pílula. (x,y) = pés.
     arms = (ângulo braço esquerdo, direito) em rad, 0 = para baixo, +/-2.6 = para cima.
     mood: None | "wow" (olhos grandes, boca O) | "happy" (sorriso) | "scared" (olhos grandes, boca reta).
-    look: -1..1 desloca o olhar. Pisca sozinho a cada ~3,5 s."""
+    look: -1..1 desloca o olhar. Pisca sozinho a cada ~3,5 s.
+    run: fase do ciclo de corrida (ciclos; ex.: t*2.5) -> pernas e braços alternando + quique.
+    rot: giro do corpo inteiro (rad) em torno do quadril, para tombos. squash: <1 achata, >1 estica."""
     if a <= 0 or s <= 0: return
     ctx.save(); ctx.translate(x, y); ctx.rotate(hunch * 0.18); ctx.scale(s, s)
+    la, ra = -legspread, legspread
+    if run is not None:
+        ph = math.sin(2 * PI * run); bob = -10 * abs(math.cos(2 * PI * run))
+        la, ra = .8 * ph, -.8 * ph; arms = (-.9 * ph + .3, .9 * ph - .3)
+        ctx.translate(0, bob)
+    if rot: ctx.translate(0, -70); ctx.rotate(rot); ctx.translate(0, 70)
+    if squash != 1.0: ctx.scale(1 / math.sqrt(squash), squash)
+    if legs:
+        for sx, ang in ((-1, la), (1, ra)):
+            ctx.save(); ctx.translate(sx * 15, -54); ctx.rotate(ang); rrect(ctx, -11, -4, 22, 58, 11); fill(ctx, body, a); ctx.restore()
     for sx, ang in ((-1, arms[0]), (1, arms[1])):            # braços atrás do corpo
         ctx.save(); ctx.translate(sx * 26, -108); ctx.rotate(ang); rrect(ctx, -11, -6, 22, 84, 11); fill(ctx, body, a); ctx.restore()
-    rrect(ctx, -34, -130, 68, 130, 34); fill(ctx, body, a)
+    if legs: rrect(ctx, -34, -130, 68, 90, 34); fill(ctx, body, a)
+    else: rrect(ctx, -34, -130, 68, 130, 34); fill(ctx, body, a)
     hy = -178 + hunch * 10
     circle(ctx, 0, hy, 40, body, a)
     if hair:
