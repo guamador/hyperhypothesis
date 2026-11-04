@@ -1,0 +1,3 @@
+cairocffi
+fonttools
+numpy

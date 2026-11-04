@@ -17,6 +17,15 @@ O dono é o Gustavo. Tudo que vai para ele, inclusive mensagens e legendas, é e
   - `scenes.py`: as cenas. A lista `SCENES` contém tuplas `(seg_inicial, seg_final, função)`.
 - O calendário e o status de cada vídeo ficam no doc "HyperHypothesis — Planejamento de vídeos" (Claude Docs): https://claude.ai/artifact/VuhJp9Xwm7pHCVLa2nB7Yy
 
+## Preparar o ambiente (sessão nova)
+
+```
+pip install --break-system-packages -q -r requirements.txt   # o ffmpeg já vem instalado
+curl -sS -o /dev/null -w '%{http_code}' https://api.elevenlabs.io/v1/models   # precisa responder (≠ 000/403)
+```
+
+Se o ElevenLabs estiver bloqueado (000/403), **não gere narração**, porque o áudio não teria como ser baixado e os créditos seriam perdidos. Escreva só os roteiros, salve-os no repositório e avise o Gustavo do bloqueio.
+
 ## Regras fixas
 
 - A narração começa **direto em "E se...?"**. O número da hipótese aparece só escrito (HUD e capa), nunca falado.
