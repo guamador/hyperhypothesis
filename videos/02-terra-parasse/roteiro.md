@@ -1,6 +1,6 @@
 # Hipótese #02: E se a Terra parasse de girar por 1 segundo?
 
-Status: **roteiro pronto, narração NÃO gerada** (o ElevenLabs estava bloqueado na execução automática de 04/11/2026).
+Status: **agendado como rascunho no Metricool** (TikTok + YouTube Short, 06/11/2026 18:00). Narração gerada em 04/11/2026 (817 créditos).
 
 - Voz: Will - Deep Smooth and Affectionate · modelo `eleven_v4` · `generations_count: 1`
 - Número-herói: **1.670 km/h** no equador
