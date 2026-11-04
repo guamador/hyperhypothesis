@@ -1,3 +1,5 @@
 cairocffi
 fonttools
 numpy
+scipy
+svg.path
