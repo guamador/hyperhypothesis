@@ -25,7 +25,7 @@ T = json.load(open(os.path.join(VIDEO, "timing.json")))
 META = json.load(open(os.path.join(VIDEO, "meta.json")))
 THEME = os.environ.get("HH_THEME") or META.get("tema")   # tema sazonal: None | "natal" (ver hh/themes.py)
 SEG = []
-OFF = 0.5 if "start" in T["segments"][0] else 0.0   # respiro antes da primeira fala
+OFF = META.get("lead_in", 0.0)   # sem respiro: a fala começa no frame 0 (vídeos 01-02 usavam 0,5 s)
 t = T["lead_in"]; SPEECH = []
 for s in T["segments"]:
     st = s.get("start", t) + OFF; en = s.get("end", st + s["d"]) + (OFF if "end" in s else 0)

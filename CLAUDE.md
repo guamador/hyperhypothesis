@@ -31,7 +31,7 @@ O dono é o Gustavo. Tudo que vai para ele, inclusive mensagens e legendas, é e
   - `meta.json`: número, título, palavras destacadas na legenda e segmentos sem legenda;
   - `timing.json`: as frases do roteiro;
   - `narr.mp3`: a narração;
-  - `scenes.py`: as cenas. A lista `SCENES` contém tuplas `(seg_inicial, seg_final, função)`. Também traz `CUES` (efeitos sonoros: `(lambda: S(6), "impact", 1.0)`) e `SHAKES` (tremor de câmera: `(lambda: S(8)+1.2, 18, .5)`). O vídeo 02 é o modelo de referência da v2.
+  - `scenes.py`: as cenas. A lista `SCENES` contém tuplas `(seg_inicial, seg_final, função)`. Também traz `CUES` (efeitos sonoros: `(lambda: S(6), "impact", 1.0)`) e `SHAKES` (tremor de câmera: `(lambda: S(8)+1.2, 18, .5)`). O vídeo 03 é o modelo de referência.
   - Automático em todo vídeo: push-in de câmera em cada cena, transição em cortina (feixe redshift) com whoosh, trilha ambiente que abaixa quando a narração fala, legenda karaokê e loudness em −14 LUFS.
 - O calendário e o status de cada vídeo ficam no doc "HyperHypothesis — Planejamento de vídeos" (Claude Docs): https://claude.ai/artifact/VuhJp9Xwm7pHCVLa2nB7Yy
 
@@ -46,13 +46,21 @@ Se o ElevenLabs estiver bloqueado (000/403), **não gere narração**, porque o 
 
 ## Regras fixas
 
+- **Abertura (lição da #01: a maioria saía em 0:01):**
+  - ação já no frame 0, com personagem ou objeto em movimento;
+  - narração começando no segundo zero (`lead_in` 0, que é o padrão);
+  - pergunta na tela em no máximo 2 linhas curtas;
+  - nada de paredão de texto parado.
+- **Duração de 35 a 50 s.** Roteiro com ~650–750 caracteres, que custa uns 690 créditos.
+- **Final:** a última frase falada é "Segue pra próxima hipótese." A cena final usa `end_card(ctx, t, S(i), question=[...], next_title="E se ...?")`, com o botão + SEGUIR e o próximo tema do calendário. Não peça para seguir no meio do vídeo.
+
 - **Som:** trilha e efeitos sempre abaixo da narração. Não aumente `music_gain` nem os níveis de `LEVEL`; o Gustavo achou alto na v2. Para mudar volume, use o ganho do `CUE` (0,3–1,0).
 - **Texto mínimo de 36 px** na tela, fora o HUD e a legenda. O `qa` acusa o que estiver abaixo disso.
 - Cores: só os tokens da marca (`brand/tokens.json`), mais o verde das árvores e campos (`#2E6B5E`) e o oceano e os continentes do globo (`fx.OCEAN_COL`, `fx.LAND_COL`).
 
 - A narração começa **direto em "E se...?"**. O número da hipótese aparece só escrito (HUD e capa), nunca falado.
 - A física tem que estar certa: confira cada número antes de narrar. Quando uma comparação não puder ser verificada, troque por uma que possa (ex.: bombas de Hiroshima, ~15 kt).
-- **Narração:** voz Will (Deep Smooth and Affectionate), modelo `eleven_v4`, **uma versão só** (`generations_count: 1`). Roteiro de no máximo ~1.100 caracteres, cerca de 1.190 créditos. O plano tem 30 mil créditos por mês.
+- **Narração:** voz Will (Deep Smooth and Affectionate), modelo `eleven_v4`, **uma versão só** (`generations_count: 1`). Roteiro de ~650–750 caracteres, cerca de 690 créditos. O plano tem 30 mil créditos por mês.
 - Todo post vai com o rótulo de conteúdo de IA ligado (TikTok `isAigc`, YouTube `isAiGeneratedContent`, Instagram `isAiGenerated`).
 - **Metricool:** marca HyperHypothesis (blogId 7873537), fuso America/Sao_Paulo. Nunca publique na marca saopaulohidro.
 
@@ -63,7 +71,7 @@ Se o ElevenLabs estiver bloqueado (000/403), **não gere narração**, porque o 
    - **Tema:** se `themes.tema_da_data()` da data de publicação devolver um tema, coloque `"tema"` no `meta.json`.
    - **Episódios temáticos:** confira também a seção da temporada no doc (ex.: "Temporada de Natal"). Os episódios de lá entram nas datas indicadas, junto com os do calendário principal.
    - Depois disso, siga no mesmo item: gere a narração (uma versão) e salve como `narr.mp3`.
-3. Rode `python3 -m hh.align` e escreva o `scenes.py`, reaproveitando as peças do `fx` e partindo do vídeo 02 como modelo (ele usa a v3 inteira).
+3. Rode `python3 -m hh.align` e escreva o `scenes.py`, reaproveitando as peças do `fx` e partindo do **vídeo 03** como modelo (abertura, duração e tela final no padrão atual).
    - **Cada cena precisa de ação**: um personagem ou objeto fazendo algo, com antecipação, impacto e reação (partículas, tremor, som). Títulos entram com `pop_text`, e números contam ou entram com `spring`.
    - **Cada cena precisa de cenário**, nada de forma solta no vazio: ícones, prédios, árvores, globo, partículas. Também precisa de movimento contínuo, um evento visual com som (`CUES`) e tremor nos impactos (`SHAKES`).
    - Rode `python3 -m hh.render videos/<pasta> qa` e **olhe a folha `out/qa_sheet.png`**. Corrija tudo que o relatório apontar: texto menor que 36 px, texto embaixo da legenda (faixa y 1370–1530) e tela vazia. Rode de novo até não sobrar nenhum aviso.

@@ -1,0 +1,195 @@
+{
+ "lead_in": 0,
+ "segments": [
+  {
+   "t": "E se você pulasse num túnel que atravessa a Terra inteira?",
+   "d": 3.5,
+   "start": 0.0,
+   "end": 4.383,
+   "chunks": [
+    [
+     0.0,
+     3.178
+    ],
+    [
+     3.766,
+     4.383
+    ]
+   ]
+  },
+  {
+   "t": "Você cai. E cai. E não para de acelerar.",
+   "d": 3,
+   "start": 4.878,
+   "end": 7.5,
+   "chunks": [
+    [
+     4.878,
+     5.369
+    ],
+    [
+     5.841,
+     6.263
+    ],
+    [
+     6.477,
+     7.5
+    ]
+   ]
+  },
+  {
+   "t": "No centro do planeta, você passa a mais de 28 mil quilômetros por hora.",
+   "d": 4,
+   "start": 8.173,
+   "end": 12.939,
+   "chunks": [
+    [
+     8.173,
+     9.278
+    ],
+    [
+     9.465,
+     12.939
+    ]
+   ]
+  },
+  {
+   "t": "Lá embaixo faz mais de 5 mil graus...",
+   "d": 2.5,
+   "start": 13.423,
+   "end": 16.218,
+   "chunks": [
+    [
+     13.423,
+     16.218
+    ]
+   ]
+  },
+  {
+   "t": "então vamos supor um túnel blindado, e sem ar.",
+   "d": 3,
+   "start": 16.578,
+   "end": 19.666,
+   "chunks": [
+    [
+     16.578,
+     18.703
+    ],
+    [
+     18.991,
+     19.666
+    ]
+   ]
+  },
+  {
+   "t": "Depois do centro, a gravidade começa a te frear.",
+   "d": 3,
+   "start": 20.156,
+   "end": 23.034,
+   "chunks": [
+    [
+     20.156,
+     23.034
+    ]
+   ]
+  },
+  {
+   "t": "E você chega do outro lado... parado. Em 38 minutos.",
+   "d": 3.5,
+   "start": 23.476,
+   "end": 28.037,
+   "chunks": [
+    [
+     23.476,
+     25.115
+    ],
+    [
+     25.508,
+     25.959
+    ],
+    [
+     26.378,
+     26.515
+    ],
+    [
+     26.705,
+     28.037
+    ]
+   ]
+  },
+  {
+   "t": "Saindo de São Paulo, você apareceria no meio do Oceano Pacífico.",
+   "d": 4,
+   "start": 28.524,
+   "end": 32.32,
+   "chunks": [
+    [
+     28.524,
+     29.58
+    ],
+    [
+     29.762,
+     32.32
+    ]
+   ]
+  },
+  {
+   "t": "Mas, se ninguém te segurar... você cai de volta.",
+   "d": 3,
+   "start": 32.713,
+   "end": 36.48,
+   "chunks": [
+    [
+     32.713,
+     34.72
+    ],
+    [
+     35.08,
+     36.48
+    ]
+   ]
+  },
+  {
+   "t": "Ida e volta, pra sempre.",
+   "d": 2,
+   "start": 36.876,
+   "end": 38.838,
+   "chunks": [
+    [
+     36.876,
+     37.794
+    ],
+    [
+     38.103,
+     38.838
+    ]
+   ]
+  },
+  {
+   "t": "Pra onde você cavaria?",
+   "d": 1.5,
+   "start": 39.414,
+   "end": 40.619,
+   "chunks": [
+    [
+     39.414,
+     40.619
+    ]
+   ]
+  },
+  {
+   "t": "Segue pra próxima hipótese.",
+   "d": 1.5,
+   "start": 41.129,
+   "end": 42.658,
+   "chunks": [
+    [
+     41.129,
+     42.658
+    ]
+   ]
+  }
+ ],
+ "tail": 3.0,
+ "audio_dur": 42.657959
+}

@@ -1,9 +1,39 @@
 {
-  "numero": 1,
-  "titulo": "E se você viajasse na velocidade da luz?",
-  "highlight": ["luz", "luz?", "infinita.", "99%.", "9.200", "megatons", "hiroshima.", "estranha.", "azul.", "escuridão.",
-                "radiação.", "sobrevive.", "99,99%", "22", "dias", "relógio.", "mês", "8", "anos", "meio.", "pena?"],
-  "nocap": [1, 8, 21],
-  "voz": {"nome": "Will - Deep Smooth and Affectionate", "modelo": "eleven_v4", "obs": "narração gerada pelo Gustavo no site"},
-  "publicado": "2026-11-04T18:00:00-03:00"
+ "numero": 1,
+ "titulo": "E se você viajasse na velocidade da luz?",
+ "highlight": [
+  "luz",
+  "luz?",
+  "infinita.",
+  "99%.",
+  "9.200",
+  "megatons",
+  "hiroshima.",
+  "estranha.",
+  "azul.",
+  "escuridão.",
+  "radiação.",
+  "sobrevive.",
+  "99,99%",
+  "22",
+  "dias",
+  "relógio.",
+  "mês",
+  "8",
+  "anos",
+  "meio.",
+  "pena?"
+ ],
+ "nocap": [
+  1,
+  8,
+  21
+ ],
+ "voz": {
+  "nome": "Will - Deep Smooth and Affectionate",
+  "modelo": "eleven_v4",
+  "obs": "narração gerada pelo Gustavo no site"
+ },
+ "publicado": "2026-11-04T18:00:00-03:00",
+ "lead_in": 0.5
 }

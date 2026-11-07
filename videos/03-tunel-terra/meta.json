@@ -1,0 +1,8 @@
+{
+ "numero": 3,
+ "titulo": "E se você caísse num túnel que atravessa a Terra?",
+ "highlight": ["terra", "inteira?", "acelerar.", "28", "mil", "5", "graus...", "blindado,", "frear.", "parado.", "38", "minutos.", "pacífico.", "volta.", "sempre.", "cavaria?", "hipótese."],
+ "nocap": [0, 10, 11],
+ "voz": {"nome": "Will - Deep, Smooth and Affectionate", "id": "CstacWqMhJQlnfLPxRG4", "modelo": "eleven_v4", "creditos": 687},
+ "lead_in": 0.0
+}

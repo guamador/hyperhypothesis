@@ -115,3 +115,32 @@ def pop_text_fit(ctx, txt, font, size, x, y, col, t, t0, maxw=888, **kw):
     w = font.width(txt, size)
     if w > maxw: size *= maxw / w
     pop_text(ctx, txt, font, size, x, y, col, t, t0, **kw)
+
+
+# ---------------------------------------------------------------- tela final padrão
+def end_card(ctx, t, t0, question=None, next_title=None, globe_deco=True):
+    """Tela final: pergunta (opcional) + logo + botão "+ SEGUIR" pulsando + "NA PRÓXIMA: ..." (opcional).
+    t0 = início da tela final (normalmente S(última frase))."""
+    background(ctx, t)
+    if question:
+        lines = question if isinstance(question, (list, tuple)) else [question]
+        for j, ln in enumerate(lines):
+            pop_text_fit(ctx, ln, DISP, 92, 540, 470 + j * 112, BLUE if j == len(lines) - 1 else INK, t, t0 + j * .18)
+    kl = spring(prog(t, t0 + .5, .8))
+    if kl > 0:
+        mark(ctx, 540 - 100 * kl, 760, 1.67 * kl, 1)
+        text(ctx, "HYPER", DISP, 56, 540, 1040, INK, prog(t, t0 + .7, .3))
+        text(ctx, "HYPOTHESIS", LITE, 56, 540, 1110, INK, prog(t, t0 + .8, .3))
+    kb = spring(prog(t, t0 + 1.0, .7))
+    if kb > 0:
+        pulse = 1 + .05 * math.sin((t - t0) * 6) * clamp(t - t0 - 1.6)
+        ctx.save(); ctx.translate(540, 1240); ctx.scale(kb * pulse, kb * pulse)
+        rrect(ctx, -210, -52, 420, 104, 52); fill(ctx, RED)
+        _c._SKIP_LINT[0] = True; text(ctx, "+ SEGUIR", DISP, 52, 0, 19, VOID, 1); _c._SKIP_LINT[0] = False
+        ctx.restore()
+        text(ctx, "@hyperhypothesis", SANS, 40, 540, 1360, MUTED, prog(t, t0 + 1.3, .3))
+    if next_title:
+        kn = eo(prog(t, t0 + 1.6, .5))
+        rrect(ctx, 96, 1560 + 40 * (1 - kn), 888, 170, 24); fill(ctx, ORBIT, kn)
+        text(ctx, "NA PRÓXIMA", BOLD, 36, 140, 1622 + 40 * (1 - kn), BLUE, kn, "l", .1)
+        text_fit(ctx, next_title, BOLD, 44, 540, 1690 + 40 * (1 - kn), INK, kn, maxw=800)
