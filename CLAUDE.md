@@ -95,7 +95,7 @@ Se o ElevenLabs estiver bloqueado (000/403), **não gere narração**, porque o 
    - Renderize o vídeo e confira alguns frames do MP4 final.
 4. Faça commit e push. O MP4 vai para `videos/NN-slug/out/video.mp4`, publicado com `git add -f` para o Metricool conseguir baixar por `https://raw.githubusercontent.com/guamador/hyperhypothesis/main/...`.
 5. Agende no Metricool como **rascunho** (`draft: true`), na data e hora do calendário, com 3 posts separados:
-   - TikTok: `isAigc` ligado e capa por `videoCoverMilliseconds` no frame do número-herói;
+   - TikTok: `isAigc` ligado, `tiktokData.title` preenchido (sem ele o Metricool recusa) e capa por `videoCoverMilliseconds` no frame do número-herói;
    - YouTube Short: `madeForKids` false, `isAiGeneratedContent` true e categoria `SCIENCE_TECHNOLOGY`;
    - Instagram Reel: `instagramData`: `{type: "REEL", showReelOnFeed: true, isAiGenerated: true}`, com 3 a 5 hashtags.
    Use como media a URL raw **fixada no SHA do commit**: `.../hyperhypothesis/<sha>/videos/...`. Assim o cache do GitHub nunca entrega uma versão antiga.
