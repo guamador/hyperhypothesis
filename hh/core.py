@@ -32,8 +32,18 @@ for s in T["segments"]:
     SEG.append((st, en, s["t"])); SPEECH.append([(a + OFF, b + OFF) for a, b in s.get("chunks", [[st - OFF, en - OFF]])])
     t = en if "end" in s else t + s["d"]
 TOTAL = SEG[-1][1] + T["tail"]
+WORDS = [[(w, a + OFF, b + OFF) for w, a, b in s.get("words", [])] for s in T["segments"]]   # tempo por palavra (hh/words.py)
 def S(i): return SEG[i][0]
 def E(i): return SEG[i][1]
+def WT(i, word, end=False, nth=0):
+    """Instante em que `word` é falada na frase i (início; end=True dá o fim). Sem tempo por palavra,
+    estima pela posição das letras. Ex.: WT(3, "35") para o número aparecer junto com a fala."""
+    key = word.lower().strip(".,?!…")
+    hits = [(a, b) for w, a, b in WORDS[i] if w.lower().strip(".,?!…") == key]
+    if hits: a, b = hits[min(nth, len(hits) - 1)]; return b if end else a
+    txt = SEG[i][2].lower(); k = txt.find(key)
+    f = (k + (len(key) if end else 0)) / max(1, len(txt)) if k >= 0 else 0.0
+    return S(i) + (E(i) - S(i)) * f
 
 # ---------------------------------------------------------------- utils
 def clamp(x, a=0.0, b=1.0): return max(a, min(b, x))
@@ -208,15 +218,23 @@ def chunks():
                 x -= b - a
             return sp[-1][1]
         tot = sum(len(" ".join(g)) + 1 for g in groups); acc = 0
+        wt = WORDS[i] if len(WORDS[i]) == len(ws) else None        # tempo exato por palavra, se houver
+        k0 = 0
         for gi, g in enumerate(groups):
-            a = at(acc / tot); acc += len(" ".join(g)) + 1
-            b = at(acc / tot) if gi < len(groups) - 1 else en + 0.25
+            if wt:
+                a = wt[k0][1]; nxt = k0 + len(g)
+                b = wt[nxt][1] if nxt < len(wt) else en + 0.25
+                CAPW[len(out)] = [x[1] for x in wt[k0:nxt]]; k0 = nxt
+            else:
+                a = at(acc / tot); acc += len(" ".join(g)) + 1
+                b = at(acc / tot) if gi < len(groups) - 1 else en + 0.25
             out.append((a, b, g))
     return out
+CAPW = {}                                         # índice da legenda -> início de cada palavra
 CAPS = chunks()
 
 def captions(ctx, t):
-    for st, en, g in CAPS:
+    for ci, (st, en, g) in enumerate(CAPS):
         if st <= t < en:
             k = prog(t, st, 0.12); sc = lerp(0.85, 1.0, back(k))
             size = 60 * sc; y = 1460
@@ -229,8 +247,8 @@ def captions(ctx, t):
             # karaokê: a palavra acende quando é falada (tempo proporcional às letras)
             tot = sum(len(w) + 1 for w, _ in words); acc = 0; x = 540 - tw / 2
             _SKIP_LINT[0] = True
-            for w, c in words:
-                ws = st + (en - st) * acc / tot * .9; acc += len(w) + 1
+            for wi, (w, c) in enumerate(words):
+                ws = CAPW[ci][wi] - .04 if ci in CAPW else st + (en - st) * acc / tot * .9; acc += len(w) + 1
                 lit = .45 + .55 * prog(t, ws, .08)
                 x += text(ctx, w, BOLD, size, x, y, c, k * lit, "l") + space
             _SKIP_LINT[0] = False
