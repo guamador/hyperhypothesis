@@ -1,0 +1,8 @@
+{
+ "numero": 4,
+ "titulo": "E se o Sol virasse um buraco negro?",
+ "highlight": ["6", "quilômetros.", "8", "minutos", "20", "segundos", "chegar.", "muda.", "apaga", "tudo.", "lua", "congelar", "fundo", "quentes.", "leve", "demais"],
+ "nocap": [0, 6, 12, 13],
+ "voz": {"nome": "Will - Deep, Smooth and Affectionate", "id": "CstacWqMhJQlnfLPxRG4", "modelo": "eleven_v4", "creditos": 714, "tempo": 1.04},
+ "lead_in": 0.0
+}

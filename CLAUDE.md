@@ -19,11 +19,13 @@ O dono é o Gustavo. Tudo que vai para ele, inclusive mensagens e legendas, é e
   - `wobble()`: movimento secundário (balanço, flutuação, olhar);
   - partículas: `smoke`, `sparks`, `dust`, `trail_dust`, `spray`, `shockwave`, `speedlines`;
   - `pop_text` / `pop_text_fit`: título que entra letra a letra.
-- **Motor v4** (nasceu no teste A/B da #03; o modelo de referência é `videos/03b-tunel-terra-fable/scenes.py`). Tudo é opcional e convive com a v3:
+- **Motor v4: é o padrão de todo vídeo novo** (aprovado pelo Gustavo em 10/11/2026 depois do teste A/B da #03; o modelo de referência é `videos/03b-tunel-terra-fable/scenes.py`). As peças v3 continuam valendo dentro dele:
   - `hh/cam.py`: câmera virtual `Cam(cx, cy, z, rot, fx, fy)`. Desenhe o mundo em unidades próprias (km, m) entre `cam.apply(ctx)` e `cam.restore(ctx)`; `cam.pt(x, y)` converte mundo → tela. Serve para **plano-sequência**: seguir o personagem, afastar até o planeta inteiro, girar, sem corte. Na cena, ponha `ZOOM = 0.0` para desligar o push-in automático. Também traz `ramp`, `pulse`, `smooth`, `smoother`, `anticipate`, `lerp_log` (zoom).
   - `hh/hero.py`: personagem com cotovelos e joelhos, `POSES` (stand, crouch, leap, fall, dive, float, brake, reach, panic, dig), `mixpose(a, b, k)` para passar de uma pose a outra, `flutter()` para tremular na queda, cachecol redshift que voa contra a velocidade (`vel`), e moods extras (`effort`, `dizzy`, `calm`). Prefira `hero` a `person` em vídeos novos.
   - `hh/planet.py`: Terra em corte com as camadas reais (PREM), `earth(ctx, cam, t, ...)` com textura por nível de zoom, e `FALL`, a queda pelo túnel já integrada (posição, velocidade, tempo). Use a simulação para mover as coisas, em vez de inventar a curva: o número do HUD e o movimento saem da mesma conta.
   - **Sincronia por palavra:** depois de gerar a narração, transcreva o `narr.mp3` com `creative_transcribe_audio` (0 créditos), salve as palavras em `words_raw.json`, o roteiro em `roteiro.txt` (uma frase por linha) e rode `python3 -m hh.words videos/<pasta> [tempo]`. Isso gera o `timing.json` com o tempo de cada palavra (substitui o `hh.align`). Nas cenas, `WT(i, "palavra")` devolve o instante em que a palavra é dita: **todo evento visual e todo `CUE` deve cair na palavra certa**, não em `S(i) + chute`. A legenda karaokê passa a acender no tempo exato.
+  - `hh/anim.py` também traz `chip(ctx, texto, x, y, k, ic=, col=)` (etiqueta em pílula que nunca fica abaixo de 36 px) e `fmt_clock(seg)`. O `end_card` quebra o "NA PRÓXIMA" em duas linhas quando o título é longo.
+  - Quando a história alterna dois lugares (praia ↔ espaço na #04), use chicotes verticais de câmera dentro de uma cena só, em vez de cortes: ver `pan_state` em `videos/04-sol-buraco-negro/scenes.py`.
   - Se a narração passar de ~47 s, acelere com `ffmpeg -filter:a atempo=1.05` (até 1,06 não se nota) e passe o mesmo valor ao `hh.words`.
 - Personagem `person(...)`: tem pernas, `run=t*3` (ciclo de corrida), `rot` (tombo), `squash` (achatar/esticar), `arms`, `mood` e `look`. Ele nunca fica parado: use sempre `wobble` nos braços e no olhar.
 - `hh/audio.py`: trilha ambiente bem baixa, que abaixa mais com a fala, e efeitos em níveis fixos abaixo da narração (`LEVEL`).
@@ -37,7 +39,7 @@ O dono é o Gustavo. Tudo que vai para ele, inclusive mensagens e legendas, é e
   - `meta.json`: número, título, palavras destacadas na legenda e segmentos sem legenda;
   - `timing.json`: as frases do roteiro;
   - `narr.mp3`: a narração;
-  - `scenes.py`: as cenas. A lista `SCENES` contém tuplas `(seg_inicial, seg_final, função)`. Também traz `CUES` (efeitos sonoros: `(lambda: S(6), "impact", 1.0)`) e `SHAKES` (tremor de câmera: `(lambda: S(8)+1.2, 18, .5)`). O vídeo 03 é o modelo de referência.
+  - `scenes.py`: as cenas. A lista `SCENES` contém tuplas `(seg_inicial, seg_final, função)`. Também traz `CUES` (efeitos sonoros: `(lambda: S(6), "impact", 1.0)`) e `SHAKES` (tremor de câmera: `(lambda: S(8)+1.2, 18, .5)`). O modelo de referência é o `03b-tunel-terra-fable`.
   - Automático em todo vídeo: push-in de câmera em cada cena, transição em cortina (feixe redshift) com whoosh, trilha ambiente que abaixa quando a narração fala, legenda karaokê e loudness em −14 LUFS.
 - O calendário e o status de cada vídeo ficam no doc "HyperHypothesis — Planejamento de vídeos" (Claude Docs): https://claude.ai/artifact/VuhJp9Xwm7pHCVLa2nB7Yy
 
@@ -83,8 +85,8 @@ Se o ElevenLabs estiver bloqueado (000/403), **não gere narração**, porque o 
 2. Para cada um: escreva o roteiro seguindo o `BRAND.md`, crie a pasta `videos/NN-slug/` com `meta.json` e `timing.json`.
    - **Tema:** se `themes.tema_da_data()` da data de publicação devolver um tema, coloque `"tema"` no `meta.json`.
    - **Episódios temáticos:** confira também a seção da temporada no doc (ex.: "Temporada de Natal"). Os episódios de lá entram nas datas indicadas, junto com os do calendário principal.
-   - Depois disso, siga no mesmo item: gere a narração (uma versão) e salve como `narr.mp3`.
-3. Rode `python3 -m hh.align` e escreva o `scenes.py`, reaproveitando as peças do `fx` e partindo do **vídeo 03** como modelo (abertura, duração e tela final no padrão atual).
+   - Depois disso, siga no mesmo item: gere a narração (uma versão, num flow criado antes com `creative_create_flow`), baixe como `narr.mp3` e transcreva com `creative_transcribe_audio` (`connect_from` = nó da fala) para ter o tempo de cada palavra.
+3. Salve `roteiro.txt` e `words_raw.json`, rode `python3 -m hh.words videos/<pasta> [tempo]` e escreva o `scenes.py` partindo do **`videos/03b-tunel-terra-fable`** como modelo (motor v4: câmera, `hero`, eventos em `WT(i, "palavra")`). O `hh.align` fica só para os vídeos antigos.
    - **Menos cortes:** quando a história é um trajeto (queda, viagem, zoom de escala), faça um plano-sequência com `hh/cam.py` e deixe a transição em cortina só para mudar de assunto. Use câmera lenta e plano aberto no momento-chave.
    - O `qa` só olha 1 frame a cada 2 s: confira também frames nos instantes de transição de câmera (`frames t1 t2 ...`), onde placas e rótulos mudam de tamanho.
    - **Cada cena precisa de ação**: um personagem ou objeto fazendo algo, com antecipação, impacto e reação (partículas, tremor, som). Títulos entram com `pop_text`, e números contam ou entram com `spring`.

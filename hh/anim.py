@@ -143,4 +143,26 @@ def end_card(ctx, t, t0, question=None, next_title=None, globe_deco=True):
         kn = eo(prog(t, t0 + 1.6, .5))
         rrect(ctx, 96, 1560 + 40 * (1 - kn), 888, 170, 24); fill(ctx, ORBIT, kn)
         text(ctx, "NA PRÓXIMA", BOLD, 36, 140, 1622 + 40 * (1 - kn), BLUE, kn, "l", .1)
-        text_fit(ctx, next_title, BOLD, 44, 540, 1690 + 40 * (1 - kn), INK, kn, maxw=800)
+        if BOLD.width(next_title, 44) <= 800:
+            text_fit(ctx, next_title, BOLD, 44, 540, 1690 + 40 * (1 - kn), INK, kn, maxw=800)
+        else:                                                    # título longo: duas linhas (nunca abaixo de 36 px)
+            ws = next_title.split(); cut = min(range(1, len(ws)), key=lambda i: abs(len(" ".join(ws[:i])) - len(" ".join(ws[i:]))))
+            for j, ln in enumerate((" ".join(ws[:cut]), " ".join(ws[cut:]))):
+                text_fit(ctx, ln, BOLD, 40, 540, 1676 + 46 * j + 40 * (1 - kn), INK, kn, maxw=800)
+
+
+# ---------------------------------------------------------------- v4: etiquetas e relógio (vindos do 03b)
+def chip(ctx, txt, x, y, k, ic=None, col=INK, font=None, size=40):
+    """Etiqueta em pílula que entra com mola. k = progresso 0..1 (>1 mantém). Nunca fica menor que 36 px."""
+    if k <= 0: return
+    font = font or BOLD; s = max(spring(clamp(k)), 37 / size); al = clamp(k * 5); w = font.width(txt, size) + (86 if ic else 56)
+    ctx.save(); ctx.translate(x, y); ctx.scale(s, s)
+    rrect(ctx, -w / 2, -42, w, 84, 42); fill(ctx, VOID, .86 * al)
+    ctx.set_line_width(3); rrect(ctx, -w / 2, -42, w, 84, 42); ctx.set_source_rgba(*col, .9 * al); ctx.stroke()
+    if ic: icon(ctx, ic, -w / 2 + 46, 0, 50, col, al, "fill")
+    text(ctx, txt, font, size, (30 if ic else 0), 14, col, al)
+    ctx.restore()
+
+def fmt_clock(sec):
+    """Segundos -> 'MM:SS'."""
+    m, s = divmod(int(round(sec)), 60); return f"{m:02d}:{s:02d}"
