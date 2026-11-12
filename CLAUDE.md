@@ -65,7 +65,7 @@ Se o ElevenLabs estiver bloqueado (000/403), **não gere narração**, porque o 
   - um número-herói só, com frase própria ("38 minutos."), e no máximo 3 ou 4 números no vídeo;
   - uma virada perto do fim (uma consequência engraçada ou um perigo) antes da pergunta;
   - a pergunta final se responde com uma palavra ("Pra onde você cavaria?"), o que facilita comentar;
-  - tags de emoção do ElevenLabs também gastam créditos: use poucas.
+  - tags de emoção do ElevenLabs também gastam créditos: use poucas. **Nunca use `[whispers]` nem outro cochicho** (o Gustavo achou estranho na #04 e na #05); para criar suspense, use reticências e frase curta ("Até que...").
 - **Duração de 35 a 50 s.** Roteiro com ~650–750 caracteres, que custa uns 690 créditos.
 - **Final:** a última frase falada é "Segue pra próxima hipótese." A cena final usa `end_card(ctx, t, S(i), question=[...], next_title="E se ...?")`, com o botão + SEGUIR e o próximo tema do calendário. Não peça para seguir no meio do vídeo.
 
