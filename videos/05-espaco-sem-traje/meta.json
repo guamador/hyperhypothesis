@@ -1,0 +1,8 @@
+{
+ "numero": 5,
+ "titulo": "E se você saísse da nave sem traje?",
+ "highlight": ["solta", "ar.", "rasgam.", "explode.", "congela", "saliva", "ferver.", "incha,", "dobro.", "15", "segundos.", "apagão.", "minuto", "meio,", "sobreviver.", "1966,", "sobreviveu.", "fervendo."],
+ "nocap": [0, 6, 11, 12],
+ "voz": {"nome": "Will - Deep, Smooth and Affectionate", "id": "CstacWqMhJQlnfLPxRG4", "modelo": "eleven_v4", "creditos": 589, "tempo": 1.0},
+ "lead_in": 0.0
+}
